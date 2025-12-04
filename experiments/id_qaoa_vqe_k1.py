@@ -3,7 +3,7 @@
 ID(QAOA) & ID(VQE) für Max-Cut (k=1, kein Cluster).
 
 Erzeugt:
-  - Alle 20 ursprünglichen Plots (1–20)
+  - Plots 1–3 sowie 5–20 (Plot 4 "Top-k Active Instances" wurde entfernt)
   - Bestcuts-Plot
   - Metrik-Plots (J_best/J*, J_best-cut/J*, p_opt, Eval-Counts)
   - Vier Ansätze:
@@ -53,7 +53,6 @@ from src.id_maxcut_plots import (
     plot_landscape_and_trajectories,
     plot_upper_envelope_with_topk,
     plot_switch_points_of_algorithms,
-    plot_topk_with_active_instances,
     plot_optimal_maxcut_graph,
     plot_alg_vs_optimal_cut,
     plot_plain_graph,
@@ -255,7 +254,7 @@ def main():
         algo_hists=algo_hists_for_bestcuts
     )
 
-    # ===== Plots 1–4 =====
+    # ===== Plots 1–3 (Plot 4 entfernt) =====
     plot_landscape_and_trajectories(
         save_path=f"{args.save_prefix}_plot1_landscape_trajectories.png",
         lam_grid=lam_grid,
@@ -286,25 +285,6 @@ def main():
         J_star=J_star,
         hist_q=hist_q,
         hist_v=hist_v,
-        edges=edges,
-        Z=Z,
-        w_fun_1d=w_fun_1d
-    )
-
-    lam_q_path = hist_q.get("lam", np.array([]))
-    lam_v_path = hist_v.get("lam", np.array([]))
-    active_ids_q = [envelope_value_and_active_id(float(l), edges, Z, w_fun_1d)[1] for l in lam_q_path] if lam_q_path.size else []
-    active_ids_v = [envelope_value_and_active_id(float(l), edges, Z, w_fun_1d)[1] for l in lam_v_path] if lam_v_path.size else []
-
-    plot_topk_with_active_instances(
-        save_path=f"{args.save_prefix}_plot4_topk_active.png",
-        lam_grid=lam_grid,
-        top_ids=top_ids,
-        top_curves=top_curves,
-        active_ids_q=active_ids_q,
-        active_ids_v=active_ids_v,
-        lams_q=lam_q_path,
-        lams_v=lam_v_path,
         edges=edges,
         Z=Z,
         w_fun_1d=w_fun_1d
