@@ -1,2 +1,4 @@
 # Figures: rohe Plots nicht versionieren
 figures/raw/
+.DS_Store
+figures/.DS_Store
